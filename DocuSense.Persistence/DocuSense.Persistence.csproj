@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SemanticKernel.Connectors.PgVector" Version="1.72.0-preview" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DocuSense.Application\DocuSense.Application.csproj" />
+    <ProjectReference Include="..\DocuSense.Infrastructure\DocuSense.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
