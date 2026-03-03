@@ -2,8 +2,8 @@
 {
     public interface IVectorDatabaseService
     {
-        Task IngestDataAsync(List<string> chunks);
+        Task IngestDataAsync(List<string> chunks, string documentId);
 
-        Task<List<string>> SearchDataAsync(string query, int top);
+        Task<List<string>> SearchDataAsync(string query, int top, string documentId);
     }
 }

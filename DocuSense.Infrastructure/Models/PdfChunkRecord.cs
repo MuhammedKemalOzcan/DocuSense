@@ -10,6 +10,9 @@ namespace DocuSense.Infrastructure.Models
         [VectorStoreData]
         public string Text { get; set; }
 
+        [VectorStoreData(IsIndexed = true)]
+        public string DocumentId { get; set; }
+
         [VectorStoreVector(1536)]
         public ReadOnlyMemory<float> Vector { get; set; }
     }

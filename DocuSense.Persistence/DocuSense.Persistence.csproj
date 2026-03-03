@@ -7,11 +7,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.24" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.24">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.SemanticKernel.Connectors.PgVector" Version="1.72.0-preview" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.11" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DocuSense.Application\DocuSense.Application.csproj" />
+    <ProjectReference Include="..\DocuSense.Domain\DocuSense.Domain.csproj" />
     <ProjectReference Include="..\DocuSense.Infrastructure\DocuSense.Infrastructure.csproj" />
   </ItemGroup>
 

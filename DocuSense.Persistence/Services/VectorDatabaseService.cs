@@ -16,9 +16,11 @@ namespace DocuSense.Persistence.Services
             _collection = vectorStore.GetCollection<string, PdfChunkRecord>("pdf_chunk_records");
         }
 
-        public async Task IngestDataAsync(List<string> chunks)
+        public async Task IngestDataAsync(List<string> chunks, string documentId)
         {
+            //Chunkları Vektöre çeviriyor.
             var embedding = await _embeddingGenerator.GenerateAsync(chunks);
+            //Koleksiyonun varlığını kontrol et.
             await _collection.EnsureCollectionExistsAsync();
 
             for (int i = 0; i < chunks.Count; i++)
@@ -26,6 +28,7 @@ namespace DocuSense.Persistence.Services
                 var pdfChunkRecord = new PdfChunkRecord()
                 {
                     Id = Guid.NewGuid().ToString(),
+                    DocumentId = documentId,
                     Text = chunks[i],
                     Vector = embedding[i].Vector
                 };
@@ -34,11 +37,19 @@ namespace DocuSense.Persistence.Services
             }
         }
 
-        public async Task<List<string>> SearchDataAsync(string query, int top)
+        public async Task<List<string>> SearchDataAsync(string query, int top, string documentId)
         {
+            //aranılan metni vektöre dönüştürür.
             ReadOnlyMemory<float> searchVector = (await _embeddingGenerator.GenerateAsync(query)).Vector;
 
-            List<VectorSearchResult<PdfChunkRecord>> searchResult = await _collection.SearchAsync(searchVector, top).ToListAsync();
+            var vectorSearchOptions = new VectorSearchOptions<PdfChunkRecord>
+            {
+                Filter = r => r.DocumentId == documentId
+            };
+
+            //SearchAsync metoduyla vektöre dönüştürülen metnin benzerliğini bulur ve top kadar benzerlik getirir.
+            List<VectorSearchResult<PdfChunkRecord>> searchResult = await _collection.SearchAsync(searchVector, top, vectorSearchOptions)
+                .ToListAsync();
 
             List<string> context = [];
             foreach (var result in searchResult)
