@@ -1,0 +1,8 @@
+# Master Ignore
+**/.vs/
+**/bin/
+**/obj/
+**/node_modules/
+**/.next/
+**/appsettings.Development.json
+**/.env.local
