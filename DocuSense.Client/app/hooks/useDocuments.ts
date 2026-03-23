@@ -8,7 +8,6 @@ import { Chat, UpdateChatTitle } from "../types/chat";
 import { useRouter } from "next/navigation";
 import { useChatStore } from "../stores/ChatStore";
 import { useShallow } from "zustand/shallow";
-import toast from "react-hot-toast";
 
 export const useDocuments = () => {
   const {
@@ -33,7 +32,10 @@ export const useDocuments = () => {
     const formData = new FormData();
     formData.append("file", file);
     const response = await IngestDocument(formData);
+
     if (!response.success) {
+      console.log(response.error);
+
       setUploading(false, "fail");
       return;
     }
@@ -72,7 +74,7 @@ export const useDocuments = () => {
     if (!response.success) {
       return { error: response.error, success: response.success };
     }
-    const {title,id} = response.data;
+    const { title, id } = response.data;
     updateChatTitleById(id, title);
     return { success: true, title: title };
   };

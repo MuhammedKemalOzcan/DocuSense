@@ -67,6 +67,7 @@ export const useChatMessages = (chatId: string) => {
         method: "POST",
         signal: newController.signal,
       });
+
       if (!response.ok) {
         setIsLoading(false);
         return;
@@ -78,6 +79,7 @@ export const useChatMessages = (chatId: string) => {
       readAiResponse(response.body);
     } catch (error: any) {
       if (error.name === "AbortError") return;
+
       toast.error(error);
     }
   };

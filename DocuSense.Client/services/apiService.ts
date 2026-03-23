@@ -1,5 +1,3 @@
-"use server";
-
 import { apiClient } from "@/app/lib/apiClient";
 import { Chat, Message, UpdateChatTitle } from "@/app/types/chat";
 

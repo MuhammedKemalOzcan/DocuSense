@@ -2,12 +2,15 @@
 
 import { SignUpFormState } from "@/app/lib/definition";
 import { signUp } from "@/services/auth";
-import React, { useActionState } from "react";
-import { MdEmail, MdLock, MdPerson, MdVisibility } from "react-icons/md";
+import { useActionState, useState } from "react";
+import { MdEmail, MdLock, MdPerson } from "react-icons/md";
+import ShowPassword from "./ShowPassword";
 
 export default function Form() {
   const initialState: SignUpFormState = { errors: {}, message: null };
   const [state, action, pending] = useActionState(signUp, initialState);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   return (
     <form action={action}>
       {state?.message && (
@@ -17,22 +20,43 @@ export default function Form() {
       )}
       <div className="mb-5">
         <label
-          htmlFor="fullname"
+          htmlFor="firstName"
           className="block text-slate-300 text-sm font-medium mb-2"
         >
-          Full Name
+          First Name
         </label>
         <div className="relative">
           <MdPerson className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-lg" />
           <input
-            name="fullname"
-            id="fullname"
+            name="firstName"
+            id="firstName"
             type="text"
-            placeholder="John Doe"
+            placeholder="John"
             className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
           />
         </div>
-        {state.errors?.fullname && (
+        {state.errors?.firstName && (
+          <p className="text-sm text-red-500">{state.message}</p>
+        )}
+      </div>
+      <div className="mb-5">
+        <label
+          htmlFor="lastName"
+          className="block text-slate-300 text-sm font-medium mb-2"
+        >
+          Last Name
+        </label>
+        <div className="relative">
+          <MdPerson className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 text-lg" />
+          <input
+            name="lastName"
+            id="lastName"
+            type="text"
+            placeholder="Doe"
+            className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 pl-10 pr-4 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
+          />
+        </div>
+        {state.errors?.lastName && (
           <p className="text-sm text-red-500">{state.message}</p>
         )}
       </div>
@@ -73,13 +97,14 @@ export default function Form() {
           <input
             id="password"
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="••••••••"
             className="w-full bg-slate-700 border border-slate-600 rounded-lg py-3 pl-10 pr-10 text-white placeholder-slate-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition"
           />
-          <button className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-300">
-            <MdVisibility className="text-lg" />
-          </button>
+          <ShowPassword
+            showPassword={showPassword}
+            setShowPassword={setShowPassword}
+          />
         </div>
         {state.errors?.password && (
           <p className="text-sm text-red-500">{state.message}</p>

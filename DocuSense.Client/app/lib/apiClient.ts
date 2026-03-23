@@ -1,6 +1,9 @@
-import { getSession } from "./session";
+//Sunucu tarafında çalışırken SERVER_API_URL (http://api:8080/api) mevcuttur, onu kullanır.
+"use server";
+import { auth } from "@/auth";
 
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+//Tarayıcıda çalışırken SERVER_API_URL undefined olur, NEXT_PUBLIC_API_URL (http://localhost:8080/api) devreye girer.
+const BASE_URL = process.env.SERVER_API_URL || process.env.NEXT_PUBLIC_API_URL;
 
 interface FetchOptions extends RequestInit {
   body?: any;
@@ -15,7 +18,8 @@ export async function apiClient<T>(
   options: FetchOptions = {},
 ): Promise<ApiResponse<T>> {
   try {
-    const token = await getSession();
+    const session = await auth();
+    const token = session?.accessToken;
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
@@ -41,8 +45,6 @@ export async function apiClient<T>(
       ...options,
       headers,
     });
-
-    console.log("status: ", response.status);
 
     if (!response.ok) {
       if (response.status === 401) {

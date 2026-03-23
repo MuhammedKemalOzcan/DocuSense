@@ -9,15 +9,16 @@ import { useEffect, useState, useRef } from "react"; // useRef eklendi
 import { useChatStore } from "../stores/ChatStore";
 import LoadingUI from "./Loading";
 import { BiLogOut, BiTrash } from "react-icons/bi";
-import { deleteSession } from "../lib/session";
 import { useRouter } from "next/navigation";
 import { CiMenuKebab } from "react-icons/ci";
 import { FaPen } from "react-icons/fa";
 import toast from "react-hot-toast";
 import { UpdateChatTitle } from "../types/chat";
 import RenameModal from "./RenameModal";
+import { KeycloakSignOut } from "../lib/action";
+import { User } from "next-auth";
 
-export default function Sidebar() {
+export default function Sidebar({ user }: { user: User }) {
   const pathname = usePathname();
   const router = useRouter();
   const { uploadFile, getDocuments, chatList, deleteChat, updateChatTitle } =
@@ -34,6 +35,8 @@ export default function Sidebar() {
     getDocuments();
   }, []);
 
+  console.log(user);
+
   useEffect(() => {
     const handleClickOutside = () => setOpenMenuId(null);
     if (openMenuId) {
@@ -41,12 +44,6 @@ export default function Sidebar() {
     }
     return () => window.removeEventListener("click", handleClickOutside);
   }, [openMenuId]);
-
-  const handleLogout = async () => {
-    await deleteSession();
-    router.push("/login");
-  };
-
   const handleDelete = async (chatId: string) => {
     const response = await deleteChat(chatId);
     if (response.error) {
@@ -71,14 +68,12 @@ export default function Sidebar() {
     if (response.error) {
       toast.error(response.error);
     }
-    console.log(response);
 
     if (response.success) {
       toast.success(`Chat title changed to: ${response.title}`);
       setIsModalOpen(false);
       setSelectedChat(null);
     }
-    console.log("çalıştı");
   };
 
   return (
@@ -190,23 +185,29 @@ export default function Sidebar() {
       </div>
 
       {/* User Profile */}
-      <div className="border-t border-gray-700 pt-4 mt-auto flex items-center gap-3">
-        <div className="w-10 h-10 bg-gradient-to-tr from-orange-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-          AM
+      {user && (
+        <div className="border-t border-gray-700 pt-4 mt-auto flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-tr from-orange-400 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
+            {user.name?.charAt(0)}
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-white text-sm font-semibold truncate">
+              {user.name}
+            </p>
+            <p className="text-gray-500 text-xs">Pro Account</p>
+          </div>
+
+          <form action={KeycloakSignOut}>
+            <button
+              type="submit"
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <BiLogOut size={24} />
+            </button>
+          </form>
         </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-white text-sm font-semibold truncate">
-            Alex Morgan
-          </p>
-          <p className="text-gray-500 text-xs">Pro Account</p>
-        </div>
-        <button
-          onClick={handleLogout}
-          className="text-gray-400 hover:text-white transition-colors"
-        >
-          <BiLogOut size={24} />
-        </button>
-      </div>
+      )}
+
       {isModalOpen && selectedChat && (
         <RenameModal
           isOpen={isModalOpen}

@@ -1,6 +1,7 @@
 import { FaGithub, FaGoogle } from "react-icons/fa";
 import Form from "./Form";
 import Terms from "./Terms";
+import Link from "next/link";
 
 export default function FormContainer() {
   return (
@@ -14,7 +15,7 @@ export default function FormContainer() {
         </p>
         <Form />
         <Terms />
-        
+
         <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t border-slate-600"></div>
@@ -37,12 +38,12 @@ export default function FormContainer() {
         </div>
         <p className="text-center text-slate-400 text-sm">
           Already have an account?{" "}
-          <a
-            href="#"
+          <Link
+            href="/login"
             className="text-blue-400 hover:text-blue-300 font-medium transition"
           >
             Sign In
-          </a>
+          </Link>
         </p>
       </div>
     </div>

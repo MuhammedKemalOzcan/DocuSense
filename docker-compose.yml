@@ -1,0 +1,82 @@
+services:
+  # 1. VERİTABANI: pgVector Yüklü Özel PostgreSQL
+  postgres-db:
+    image: pgvector/pgvector:pg16
+    container_name: docusense_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: docusense
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Veriler silinmesin diye kalıcı alan
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+
+  # 2. BACKEND: .NET 8 API
+  api:
+    build:
+      context: . # Kök dizinden çalıştırıyoruz ki diğer katmanları bulabilsin
+      dockerfile: DocuSense.API/Dockerfile
+    container_name: docusense_api
+    restart: always
+    depends_on:
+      - postgres-db
+      - keycloak
+    ports:
+      - "8080:8080"
+    environment:
+      # Sihirli Dokunuş: Appsettings'i eziyoruz ve localhost yerine 'postgres-db' diyoruz!
+      ConnectionStrings__Postgres: "Host=postgres-db;Port=5432;Database=docusense;Username=${POSTGRES_USERNAME};Password=${POSTGRES_PASSWORD}"
+      OpenApi__ApiKey: ${OPENAI_API_KEY}
+      ASPNETCORE_ENVIRONMENT: Production
+      Keycloak__Authority: "http://keycloak:8080/realms/docusense"
+
+  # 3. FRONTEND: Next.js Client
+  client:
+    build:
+      context: ./DocuSense.Client
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: "http://localhost:8080/api"
+    container_name: docusense_client
+    restart: always
+    depends_on:
+      - api
+    ports:
+      - "3000:3000"
+    extra_hosts:
+      - "localhost:host-gateway"
+    environment:
+      SERVER_API_URL: "http://api:8080/api"
+      AUTH_KEYCLOAK_SECRET: ${AUTH_KEYCLOAK_SECRET}
+      AUTH_KEYCLOAK_ISSUER: ${AUTH_KEYCLOAK_ISSUER}
+      AUTH_KEYCLOAK_ID: ${AUTH_KEYCLOAK_ID}
+      AUTH_SECRET: "dGhyb3ducHJhY3RpY2VzcGVjaWFsb2JqZWN0dmlld25lYXJwb3RhYmxlZHJvcHBlZGo="
+      AUTH_TRUST_HOST: "true"
+      AUTH_URL: ${AUTH_URL}
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.0
+    container_name: docusense_keycloak
+    command: start-dev
+    restart: always
+    depends_on:
+      - postgres-db
+    ports:
+      - "8180:8080"
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-db:5432/keycloak
+      KC_DB_USERNAME: ${POSTGRES_USERNAME}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      KEYCLOAK_ADMIN: admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+      KC_LOG_LEVEL: INFO
+
+volumes:
+  postgres_data:
+
+
+     

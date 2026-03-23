@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { FaRegFilePdf } from "react-icons/fa";
 import { SlCloudUpload } from "react-icons/sl";
 import { useChatStore } from "../stores/ChatStore";
-import toast from "react-hot-toast";
 
 interface Props {
   onUploadFile: (file: File) => Promise<void>;
