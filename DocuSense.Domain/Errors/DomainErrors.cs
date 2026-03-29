@@ -21,7 +21,7 @@
 
         public static class KeycloakErrors
         {
-            public static Error UserAlreadyExist => Error.Validation("Keyclaok.UserAlreadyExist", "Bu email adresi ile kayıtlı bir kullanıcı zaten mevcut");
+            public static Error UserAlreadyExist => Error.Validation("Keycloak.UserAlreadyExist", "Bu email adresi ile kayıtlı bir kullanıcı zaten mevcut");
 
             public static Error InvalidUserData => Error.Validation("Keycloak.InvalidUserData", "Kullanıcı bilgileri geçersiz veya eksik.");
 
