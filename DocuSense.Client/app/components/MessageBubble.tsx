@@ -31,12 +31,7 @@ export default function MessageBubble({ message }: { message: Message }) {
             "text-right": message.isUser === false,
           })}
         >
-          {new Date(message.createdAt)
-            .toLocaleTimeString("tr-TR", {
-              hour: "2-digit",
-              minute: "2-digit",
-            })
-            .replace(":", ".")}
+          {message.createdAt}
         </p>
       </div>
     </div>

@@ -4,6 +4,6 @@ namespace DocuSense.Application.Services
 {
     public interface IPdfReaderService
     {
-        List<ChunkMetadataDto> ExtractTextFromPdf(string filePath);
+        List<ChunkMetadataDto> ExtractTextFromPdf(Stream stream);
     }
 }

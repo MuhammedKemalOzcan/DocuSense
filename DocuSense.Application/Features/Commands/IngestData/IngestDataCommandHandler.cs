@@ -34,7 +34,9 @@ namespace DocuSense.Application.Features.Queries.Commands.IngestData
             if (userId == null) return Result<IngestResultDto>.Failure(DomainErrors.User.Unauthorized);
 
             if (request.File == null || request.File.Length == 0) return Result<IngestResultDto>.Failure(DomainErrors.File.NotFound);
-            var filePath = Path.GetTempFileName();
+
+            using var stream = request.File.OpenReadStream();
+
             var documentId = Guid.NewGuid().ToString();
 
             var newChat = new Domain.Entites.Chat
@@ -48,26 +50,10 @@ namespace DocuSense.Application.Features.Queries.Commands.IngestData
 
             _chatRepository.Add(newChat);
 
-            try
-            {
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await request.File.CopyToAsync(fileStream);
-                    await fileStream.FlushAsync();
-                }
-                ;
-                var text = _pdfReaderService.ExtractTextFromPdf(filePath);
-                var chunkedText = _textChunkerService.ChunkText(text, 500);
-                await _vectorDatabaseService.IngestDataAsync(chunkedText, documentId);
-                await _unitOfWork.SaveChangesAsync(CancellationToken.None);
-            }
-            finally
-            {
-                if (System.IO.File.Exists(filePath))
-                {
-                    System.IO.File.Delete(filePath);
-                }
-            }
+            var text = _pdfReaderService.ExtractTextFromPdf(stream);
+            var chunkedText = _textChunkerService.ChunkText(text, 500);
+            await _vectorDatabaseService.IngestDataAsync(chunkedText, documentId);
+            await _unitOfWork.SaveChangesAsync(CancellationToken.None);
 
             var result = new IngestResultDto
             {

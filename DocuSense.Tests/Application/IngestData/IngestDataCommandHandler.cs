@@ -95,7 +95,7 @@ namespace DocuSense.Tests.Application.IngestData
             var (chatRepo, pdfReader, chunker, unitOfWork, vectorDb, _, handler) = CreateHandler();
 
             // PDF'den text çıkarma mock'u
-            pdfReader.Setup(p => p.ExtractTextFromPdf(It.IsAny<string>()))
+            pdfReader.Setup(p => p.ExtractTextFromPdf(It.IsAny<Stream>()))
                 .Returns(new List<ChunkMetadataDto>
                 {
                     new ChunkMetadataDto { Text = "Bu bir test dokümanıdır." }
