@@ -74,6 +74,8 @@ services:
       KEYCLOAK_ADMIN: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
       KC_LOG_LEVEL: INFO
+    volumes:
+      - ./keycloak/themes/docusense:/opt/keycloak/themes/docusense
 
 volumes:
   postgres_data:

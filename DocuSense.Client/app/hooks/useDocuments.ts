@@ -41,13 +41,7 @@ export const useDocuments = () => {
     }
     setUploading(false, "success");
 
-    const { id, title, documentId, createdAt } = response.data;
-    const newChat: Chat = {
-      id,
-      title,
-      documentId,
-      createdAt,
-    };
+    const { id } = response.data;
     if (id) router.push(`/chat/${id}`);
   };
 
