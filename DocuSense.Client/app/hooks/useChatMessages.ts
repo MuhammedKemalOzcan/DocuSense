@@ -9,10 +9,7 @@ const createMessageObj = (chatId: string, isUser: boolean, text?: string) => {
     text: text ? text : "",
     chatId: chatId,
     isUser: isUser,
-    createdAt: new Date().toLocaleTimeString("tr-TR", {
-      hour: "2-digit",
-      minute: "2-digit",
-    }),
+    createdAt: new Date().toISOString(),
   };
 
   return query;

@@ -1,9 +1,12 @@
-import React from "react";
 import { Message } from "../types/chat";
 import clsx from "clsx";
 import ChatMessage from "./ChatMessage";
+import { dateFormat } from "../utils/timeFormatter";
 
 export default function MessageBubble({ message }: { message: Message }) {
+  console.log("message: ", message);
+  console.log("Saat: ", message.createdAt);
+
   return (
     <div
       className={clsx("flex gap-4 mb-4", {
@@ -31,7 +34,7 @@ export default function MessageBubble({ message }: { message: Message }) {
             "text-right": message.isUser === false,
           })}
         >
-          {message.createdAt}
+          {dateFormat(message.createdAt)}
         </p>
       </div>
     </div>

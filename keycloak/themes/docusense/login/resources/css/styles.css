@@ -1,0 +1,291 @@
+/* 1. TÜM ARKA PLAN VE SAYFA MERKEZLEME */
+body,
+.login-pf body {
+  background-color: #0a0e1b !important;
+  background-image: none !important;
+  color: #e2e8f0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  min-height: 100vh !important;
+  margin: 0 !important;
+}
+
+/* Keycloak Varsayılan Boşluk Sıfırlaması */
+.login-pf-page {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  width: 100% !important;
+  max-width: 450px !important;
+  margin: 0 auto !important;
+}
+
+/* 2. FORM KUTUSU (CARD) - Radius İptal Edildi */
+.card-pf {
+  background-color: #121827 !important;
+  border: none !important;
+  border-radius: 0 !important; /* Beyazlık sızmasını önler */
+  padding: 30px !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* 3. BAŞLIKLAR VE METİNLER */
+.kc-form-title,
+.kc-form-title-text {
+  color: #ffffff !important;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  margin-bottom: 5px !important;
+  text-align: center !important;
+}
+.kc-login-header-subtitle {
+  color: #94a3b8 !important;
+  font-size: 14px !important;
+  margin-bottom: 25px !important;
+  text-align: center !important;
+}
+.form-group label {
+  color: #94a3b8 !important;
+  font-size: 14px !important;
+  margin-bottom: 8px !important;
+  display: block !important;
+}
+
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+#username,
+#password {
+  background-color: #0f172a !important; /* Çok koyu lacivert/siyah tonu */
+  color: #f1f5f9 !important; /* Yazılan metnin rengi (Açık gri/Beyaz) */
+  border: 1px solid #1e293b !important; /* Çok ince, koyu bir çerçeve */
+  border-radius: 8px !important;
+}
+
+/* 4. İNPUT (METİN) ALANLARI - Radius İptal Edildi */
+.form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+#username,
+#password {
+  background-color: #0f172a !important;
+  color: #f1f5f9 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 0 !important; /* Köşeler keskin */
+  padding: 12px 16px !important;
+  height: auto !important;
+  box-shadow: none !important;
+}
+.form-control:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+#username:focus,
+#password:focus {
+  border-color: #2563eb !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2) !important;
+}
+.form-control::placeholder {
+  color: #64748b !important;
+}
+
+/* İkon ve Eklenti Kutuları (Şifre Göz İkonu vb.) */
+.input-group-addon,
+.input-group-text,
+span.pf-c-form-control__icon {
+  background-color: #0f172a !important;
+  color: #94a3b8 !important;
+  border: 1px solid #1e293b !important;
+  border-left: none !important;
+  border-radius: 0 !important; /* Köşeler keskin */
+}
+
+/* 5. ANA GİRİŞ BUTONU - Radius İptal Edildi */
+.kc-form-buttons .btn-primary,
+.kc-form-login .kc-form-buttons .btn-primary {
+  background-color: #2563eb !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 0 !important; /* Köşeler keskin */
+  padding: 12px !important;
+  width: 100% !important;
+  font-weight: 600 !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  margin-top: 15px !important;
+}
+.kc-form-buttons .btn-primary:hover,
+.kc-form-login .kc-form-buttons .btn-primary:hover {
+  background-color: #1d4ed8 !important;
+}
+
+/* 6. SOSYAL MEDYA BUTONLARI (Google, Github) - Radius İptal Edildi */
+.kc-social-providers-list {
+  margin-top: 25px !important;
+  text-align: center !important;
+}
+.kc-social-providers-list::before {
+  content: "OR SIGN UP WITH" !important;
+  color: #94a3b8 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  display: block !important;
+  margin-bottom: 15px !important;
+}
+.kc-social-providers-header {
+  display: none !important;
+}
+.kc-social-providers-list .social-providers {
+  display: flex !important;
+  gap: 10px !important;
+  justify-content: center !important;
+}
+.kc-social-providers-list .btn-default,
+.kc-social-providers-list .zocial,
+a.zocial.google {
+  background-color: #0f172a !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #1e293b !important;
+  border-radius: 0 !important; /* Köşeler keskin */
+  padding: 10px !important;
+  flex: 1 !important;
+  max-width: 200px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-weight: 500 !important;
+  font-size: 14px !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+}
+.kc-social-providers-list .btn-default:hover,
+.kc-social-providers-list .zocial:hover,
+a.zocial.google:hover {
+  background-color: #1e293b !important;
+}
+.kc-social-providers-list a.btn-default img {
+  height: 20px !important;
+  margin-right: 8px !important;
+}
+
+/* 7. EKSTRA LİNKLER (Forgot Password, Remember Me) */
+.form-group.kc-form-setting,
+.form-group.kc-form-options {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
+.form-group.kc-form-setting a,
+.form-group.kc-form-options a,
+.login-pf-settings a {
+  color: #2563eb !important;
+  text-decoration: none !important;
+  font-size: 14px !important;
+}
+.form-group.kc-form-setting a:hover,
+.form-group.kc-form-options a:hover,
+.login-pf-settings a:hover {
+  text-decoration: underline !important;
+}
+input[type="checkbox"] {
+  accent-color: #2563eb !important; /* Checkbox rengi */
+}
+
+/* 8. KAYIT OL / YENİ KULLANICI ALANI (New User) */
+#kc-info,
+.login-pf-page .login-pf-signup {
+  background-color: #121827 !important;
+  margin: 0 !important;
+  
+  width: 100% !important;
+  box-sizing: border-box !important;
+  border-top: 1px solid #1e293b !important;
+}
+
+#kc-info-wrapper {
+  font-size: 13px;
+  padding: 15px 35px;
+  width: 450px;
+  background-color: #121827;
+  width: 100% !important;
+}
+
+#kc-registration span {
+  color: #94a3b8 !important;
+  font-size: 14px !important;
+}
+#kc-registration a {
+  color: #2563eb !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  margin-left: 5px !important;
+}
+#kc-registration a:hover {
+  color: #1d4ed8 !important;
+  text-decoration: underline !important;
+}
+
+/* 9. LAPTOP VE KÜÇÜK EKRANLAR İÇİN OPTİMİZASYON (Scrollbar Kaldırıldı) */
+@media (max-height: 850px), (max-width: 480px) {
+  .card-pf {
+    padding: 20px !important;
+    /* max-height ve overflow (scrollbar) özellikleri silindi */
+  }
+  .kc-form-title,
+  .kc-form-title-text {
+    font-size: 20px !important;
+  }
+  .kc-login-header-subtitle {
+    margin-bottom: 15px !important;
+  }
+  .form-group {
+    margin-bottom: 12px !important;
+  }
+  .form-control,
+  .input-group-addon,
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    padding: 8px 12px !important;
+  }
+  .kc-form-buttons .btn-primary {
+    margin-top: 10px !important;
+    padding: 10px !important;
+  }
+  .kc-social-providers-list {
+    margin-top: 15px !important;
+  }
+}
+
+button.pf-c-button.pf-m-control,
+button[data-password-toggle] {
+  background-color: #0f172a !important; /* Şifre inputu ile aynı koyu renk */
+  color: #94a3b8 !important; /* Göz ikonunun rengi (açık gri) */
+  border: 1px solid #1e293b !important; /* Dış çerçeve rengi */
+  border-left: none !important; /* Sol çizgiyi sil ki şifre kutusuyla birleşsin */
+  border-radius: 0 !important; /* Keskin köşeler kuralımızı koru */
+  box-shadow: none !important;
+}
+
+/* Üzerine gelindiğinde (Hover) veya tıklandığında (Focus) saçmalamasını engelle */
+button.pf-c-button.pf-m-control:hover,
+button.pf-c-button.pf-m-control:focus,
+button[data-password-toggle]:hover,
+button[data-password-toggle]:focus {
+  background-color: #1e293b !important; /* Üzerine gelince çok hafif aydınlansın */
+  color: #f1f5f9 !important; /* İkon rengi parlaklaşsın */
+  outline: none !important;
+  border-color: #1e293b !important;
+  border-left: none !important;
+}
+
+/* İkonun kendisine zorla renk ver (Garanti olması için) */
+button[data-password-toggle] i.fa-eye,
+button[data-password-toggle] i.fa-eye-slash {
+  color: inherit !important;
+}
